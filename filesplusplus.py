@@ -3,6 +3,7 @@ import os
 from threading import Thread as thread
 from time import sleep
 import subprocess
+import shutil
 
 window = Tk()
 window.geometry("930x600")
@@ -46,7 +47,7 @@ def deltarget(target):
         try:
             os.rmdir(target)
         except:
-            os.rmtree(target)
+            shutil.rmtree(target)
     else:
         os.remove(target)
     browse()
