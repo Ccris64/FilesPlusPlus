@@ -9,7 +9,7 @@ window = Tk()
 window.geometry("930x600")
 window.resizable(False, False)
 window.title("Files++")
-window.iconbitmap("icon.ico")
+window.iconbitmap("C:\Windows\System32\imageres.dll")
 
 cdir = "C:\\" # cdir is for "Current Directory"
 
@@ -78,12 +78,18 @@ def goback():
     browse()
 
 def itemselected(event):
+    itemstats["fg"] = "blue"
     global selecteditem
+    filepreview["state"] = "normal"
     filepreview.delete("1.0",END)
+    filepreview["state"] = "disabled"
     selecteditem = itemlist.get(itemlist.curselection()[0])
     print(selecteditem)
     global cdir
-    cdir = pathbox.get()+selecteditem
+    if pathbox.get()[-1] == "\\":
+        cdir = pathbox.get()+selecteditem
+    else:
+        cdir = pathbox.get()+"\\"+selecteditem
     print(cdir)
     print(cdir[-4:])
     if selecteditem == "..":
@@ -96,7 +102,7 @@ def itemselected(event):
             f = open(cdir, "r")
             filepreview.insert(END,f.read())
             f.close()
-            filepreview["state"] = "normal"
+            filepreview["state"] = "disabled"
     elif os.path.isdir(cdir):
         itemstats["text"] = "\""+selecteditem+"\" - Type: Folder"
 
@@ -109,7 +115,11 @@ def browseitem(event):
         cdir = cdir + "\\"
         pathbox.delete(0,END)
         pathbox.insert(0,cdir)
-        browse()
+        try:
+            browse()
+        except PermissionError:
+            itemstats["fg"] = "red"
+            itemstats["text"] = "Error: Permission denied. Please run this as administrator to access the folder."
     else:
         print(cdir)
         subprocess.run(cdir)
@@ -119,6 +129,7 @@ itemlist.bind('<<ListboxSelect>>', itemselected)
 itemlist.bind("<Double-Button>",browseitem)
 
 def browse():
+    itemstats["fg"] = "blue"
     pathboxold = pathbox.get()
     pathbox.delete(0,END)
     pathbox.insert(0,pathboxold.replace("\\\\","\\"))
