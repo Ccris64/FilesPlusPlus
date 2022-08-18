@@ -1,4 +1,9 @@
 # Files++
+
+(WARNING) This project is being discontinued, and there's a high chance I stop the developing.
+    - Why?
+      - I switched to linux, and there is no way I go back to Windows because its a resource hog. Even if there is some kind of hack to make Windows executables, this software targets Windows and does not work on any other platform.
+
 Files++ is a Python file browser for Windows. It support shredding files, deleting directories, and ignores all system-protected files.
 **If you are looking for an executable, take a look at releases.**
 ![githubthumb1](https://user-images.githubusercontent.com/93295652/183271585-78803b35-ea55-4f2b-b2e1-6bca00b9fb85.png)
